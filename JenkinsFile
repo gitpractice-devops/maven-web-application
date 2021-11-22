@@ -1,5 +1,6 @@
 timestamps {
-timeout(time: 60, unit: 'SECONDS'){
+timeout(time: 60, unit: 'SECONDS')
+{
 node('master')
 
 {
@@ -30,5 +31,9 @@ stage('ReleasetoTomcat')
     }
 }
     }
+    }
     
+    
+    
+
  
