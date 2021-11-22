@@ -30,8 +30,10 @@ stage('ReleasetoTomcat')
     sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@35.183.101.182:/opt/apache-tomcat-9.0.54/webapps/maven-web-application.war"
     }
 }
+ }
     }
     }
+    
     
     
     
