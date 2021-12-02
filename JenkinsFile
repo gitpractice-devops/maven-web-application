@@ -1,5 +1,6 @@
 timestamps {
 timeout(time: 60, unit: 'SECONDS')
+
 {
 node('master'){
     def mavenHome = tool name: "maven-3.8.3"
@@ -23,7 +24,7 @@ node('master'){
 }
  }
     }
-    }
+    
     
     
     
