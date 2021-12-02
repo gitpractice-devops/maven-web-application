@@ -1,34 +1,25 @@
 timestamps {
 timeout(time: 60, unit: 'SECONDS')
 {
-node('master')
-
-{
+node('master'){
+    def mavenHome = tool name: "maven-3.8.3"
     
-def mavenHome = tool name: "maven-3.8.3"
-
-stage('GettingCode')
-    {
-    git credentialsId: 'c931730a-cd18-4f13-9886-5e105996071f', url: 'https://github.com/gitpractice-devops/maven-web-application.git'
+    stage('GettingBuild'){
+        git credentialsId: 'c931730a-cd18-4f13-9886-5e105996071f', url: 'https://github.com/gitpractice-devops/maven-web-application.git'
     }
-    
-    stage('Build')
-    
-    
-    {
-    sh "${mavenHome}/bin/mvn clean package"
+    stage('Build'){
+        sh "${mavenHome}/bin/mvn clean package"
     }
-
-stage('DeploytoNexus')
-    {
-    sh "${mavenHome}/bin/mvn deploy"
+    stage('DeployArtifactToNexus'){
+        sh "${mavenHome}/bin/mvn deploy"
     }
-stage('ReleasetoTomcat')
-{
-    sshagent(['b0bba480-6af0-49d6-a202-37cde4511090'])
-    {
-    sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@35.183.101.182:/opt/apache-tomcat-9.0.54/webapps/maven-web-application.war"
+    stage('DeployApplicationToTomcat'){
+        
+            sshagent(['b0bba480-6af0-49d6-a202-37cde4511090'])
+        {
+        sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@99.79.44.23:/opt/apache-tomcat-9.0.54/webapps/maven-web-application.war"
     }
+}
 }
  }
     }
